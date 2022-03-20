@@ -1,0 +1,5 @@
+name: AntiGetOPByFuckServer
+version: '${project.version}'
+main: natjerry.Main
+authors: [ NaT_Jerry ]
+website: https://github.com/NatJerry
