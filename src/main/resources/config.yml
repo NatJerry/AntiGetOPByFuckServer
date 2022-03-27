@@ -1,0 +1,12 @@
+#示范，实装时请改成自己设置的玩家名字
+opList:
+  - NaT_Jerry
+  - JL_NPE
+BlackList:
+  - fine
+  - Lucky_boy
+#检测玩家聊天是否提到了黑名单玩家名字
+CheckChat: false
+BanNoOPList: true
+opKickMessage: "检测到你非法获取op，若您没有这么做的话请联系管理员或服主"
+BlackKickMessage: "您已被加入本服务器的黑名单"
