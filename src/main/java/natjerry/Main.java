@@ -14,7 +14,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public final class Main extends JavaPlugin implements Listener {
+public final class Main extends JavaPlugin implements Listener{
     ThreadPoolExecutor executor = new ThreadPoolExecutor(1,Integer.MAX_VALUE,Long.MAX_VALUE, TimeUnit.DAYS,new LinkedBlockingDeque<>());
     List<String> opList = (List<String>) getConfig().getList("opList");
     List<String> BlackList = (List<String>) getConfig().getList("BlackList");
@@ -34,17 +34,22 @@ public final class Main extends JavaPlugin implements Listener {
                 if(!opList.contains(e.getPlayer().getName())){
                     e.getPlayer().setOp(false);
                     e.setKickMessage(ChatColor.RED + "你非法获得了op，已被服务器永久封禁\n 若判断出先错误，请寻找服主解封");
-                    String str = new String(ChatColor.RED + "你非法获得了op，已被服务器永久封禁\n 若判断出先错误，请寻找服主解封");
+                    String str = new String(ChatColor.RED + "你非法获得了op，已被服务器永久封禁\n 若判断出现错误，请寻找服主解封");
                     e.setResult(PlayerLoginEvent.Result.KICK_BANNED);
                     Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(),str,null,null);
                 }
+            }
+            if(BlackList.contains(e.getPlayer().getName())){
+                e.setKickMessage(ChatColor.RED + getConfig().getString("BlackKickMessage","您已被加入本服务器的黑名单"));
+                e.setResult(PlayerLoginEvent.Result.KICK_WHITELIST);
             }
     }
     public void onPlayerChat(AsyncPlayerChatEvent e){
         String msg = e.getMessage();
         for(String s:BlackList){
             if(msg.indexOf(s)!=-1){
-
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(ChatColor.RED + "你发送了敏感信息");
             }
         }
     }
